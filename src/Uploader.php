@@ -174,10 +174,13 @@ namespace Cloudinary {
             */            
             if ($file) {
                 
-                if (!preg_match('/^@|^https?:|^s3:|^data:[^;]*;base64,([a-zA-Z0-9\/+\n=]+)$/', $file)) {
-                    $post_params["file"] = "@" . $file;
-                } else {
+                if (file_exists($file))
+                {
                     $post_params['file'] = curl_file_create($file);
+                }
+                else if (!preg_match('/^@|^https?:|^s3:|^data:[^;]*;base64,([a-zA-Z0-9\/+\n=]+)$/', $file))
+                {
+                    $post_params["file"] = "@" . $file;
                 }
             }
 
