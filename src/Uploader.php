@@ -169,11 +169,15 @@ namespace Cloudinary {
             $ch = curl_init($api_url);
 
             $post_params = array();
+            /**
+            * @todo support urls here
+            */            
             if ($file) {
+                
                 if (!preg_match('/^@|^https?:|^s3:|^data:[^;]*;base64,([a-zA-Z0-9\/+\n=]+)$/', $file)) {
                     $post_params["file"] = "@" . $file;
                 } else {
-                    $post_params["file"] = $file;
+                    $post_params['file'] = curl_file_create($file);
                 }
             }
 
